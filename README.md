@@ -1,1 +1,3 @@
-# recipe_backend
+# Recipe Backend
+
+Created using django
