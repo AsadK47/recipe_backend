@@ -3,38 +3,6 @@ from recipes.models import Recipe, Ingredient
 def seed_data():
     recipes_data = [
         {
-            "name": "Air Fryer Crispy Chilli Beef",
-            "category": "Main Course",
-            "difficulty": "Medium",
-            "prep_time": "15 minutes",
-            "cooking_time": "10 minutes",
-            "base_servings": 4,
-            "current_servings": 4,
-            "ingredients": [
-                {"base_quantity": 500, "unit": "g", "name": "beef steak, sliced into strips"},
-                {"base_quantity": 3, "unit": "tbsp", "name": "cornflour"},
-                {"base_quantity": 1, "unit": "tbsp", "name": "soy sauce"},
-                {"base_quantity": 2, "unit": "tbsp", "name": "sweet chilli sauce"},
-                {"base_quantity": 1, "unit": "tbsp", "name": "rice vinegar"},
-                {"base_quantity": 1, "unit": "", "name": "ketchup"},
-                {"base_quantity": 1, "unit": "", "name": "red chilli, finely sliced"},
-                {"base_quantity": 2, "unit": "tbsp", "name": "vegetable oil"},
-                {"base_quantity": 2, "unit": "", "name": "spring onions, finely sliced"},
-            ],
-            "pre_prep_instructions": "Slice the beef into thin strips and pat dry.",
-            "instructions": """
-            Place the beef strips in a bowl, add cornflour, and toss to coat evenly.
-            Preheat the air fryer to 200°C.
-            Lightly spray the air fryer basket with oil and add the beef strips in a single layer.
-            Cook for 8-10 minutes, shaking halfway through until crispy.
-            In a separate bowl, mix soy sauce, sweet chilli sauce, rice vinegar, ketchup, and red chilli.
-            Heat the sauce mixture in a pan until it starts to thicken.
-            Add the cooked beef to the pan and toss to coat in the sauce.
-            Garnish with spring onions before serving.
-            """,
-            "notes": "Serve immediately with steamed rice or noodles for a delicious and crispy meal.",
-        },
-        {
             "name": "Achari Chicken Curry (Instant Pot Version)",
             "category": "Main Course",
             "difficulty": "Medium",
@@ -77,6 +45,38 @@ def seed_data():
             """,
             "notes": "A flavorful and tangy chicken curry, perfect for pairing with naan or rice.",
         },
+        {
+            "name": "Air Fryer Crispy Chilli Beef",
+            "category": "Main Course",
+            "difficulty": "Medium",
+            "prep_time": "15 minutes",
+            "cooking_time": "10 minutes",
+            "base_servings": 4,
+            "current_servings": 4,
+            "ingredients": [
+                {"base_quantity": 500, "unit": "g", "name": "beef steak, sliced into strips"},
+                {"base_quantity": 3, "unit": "tbsp", "name": "cornflour"},
+                {"base_quantity": 1, "unit": "tbsp", "name": "soy sauce"},
+                {"base_quantity": 2, "unit": "tbsp", "name": "sweet chilli sauce"},
+                {"base_quantity": 1, "unit": "tbsp", "name": "rice vinegar"},
+                {"base_quantity": 1, "unit": "", "name": "ketchup"},
+                {"base_quantity": 1, "unit": "", "name": "red chilli, finely sliced"},
+                {"base_quantity": 2, "unit": "tbsp", "name": "vegetable oil"},
+                {"base_quantity": 2, "unit": "", "name": "spring onions, finely sliced"},
+            ],
+            "pre_prep_instructions": "Slice the beef into thin strips and pat dry.",
+            "instructions": """
+            Place the beef strips in a bowl, add cornflour, and toss to coat evenly.
+            Preheat the air fryer to 200°C.
+            Lightly spray the air fryer basket with oil and add the beef strips in a single layer.
+            Cook for 8-10 minutes, shaking halfway through until crispy.
+            In a separate bowl, mix soy sauce, sweet chilli sauce, rice vinegar, ketchup, and red chilli.
+            Heat the sauce mixture in a pan until it starts to thicken.
+            Add the cooked beef to the pan and toss to coat in the sauce.
+            Garnish with spring onions before serving.
+            """,
+            "notes": "Serve immediately with steamed rice or noodles for a delicious and crispy meal.",
+        }
     ]
 
     for recipe_data in recipes_data:
