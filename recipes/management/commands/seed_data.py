@@ -36,19 +36,23 @@ class Command(BaseCommand):
                 {"base_quantity": 2, "unit": "lbs", "name": "skinless and boneless chicken thighs, cut into bite-sized pieces"},
                 {"base_quantity": 1, "unit": "cup", "name": "fresh tomato puree"},
             ],
-            "pre_prep_instructions": "Chop onions and garlic.",
-            "instructions": """
-            Press the sauté button on the Instant Pot, add the oil, and allow it to heat up for a minute.
-            Once the oil is hot, add the cumin seeds and bay leaf.
-            When the cumin seeds brown, add the diced onion and stir-fry for 6-7 minutes, or until the onions begin to brown.
-            Add the minced garlic and ginger, stir, then add all the spices. Mix well.
-            Add the chicken pieces and stir-fry for 5-6 minutes, or until the chicken is mostly cooked.
-            Add the fresh tomato puree and mix well.
-            Secure the lid, close the pressure valve, and cook for 5 minutes at high pressure.
-            Naturally release pressure.
-            Garnish with cilantro and serve.
-            """,
-            "notes": "A flavorful and tangy chicken curry, perfect for pairing with naan or rice.",
+            "pre_prep_instructions": [
+               "Chop onions and garlic."
+            ],
+            "instructions": [
+                "Press the sauté button on the Instant Pot, add the oil, and allow it to heat up for a minute.",
+                "Once the oil is hot, add the cumin seeds and bay leaf.",
+                "When the cumin seeds brown, add the diced onion and stir-fry for 6-7 minutes, or until the onions begin to brown.",
+                "Add the minced garlic and ginger, stir, then add all the spices. Mix well.",
+                "Add the chicken pieces and stir-fry for 5-6 minutes, or until the chicken is mostly cooked.",
+                "Add the fresh tomato puree and mix well.",
+                "Secure the lid, close the pressure valve, and cook for 5 minutes at high pressure.",
+                "Naturally release pressure.",
+                "Garnish with cilantro and serve."
+            ],
+            "notes": [
+               "A flavorful and tangy chicken curry, perfect for pairing with naan or rice."
+            ],
         },
         {
             "name": "Air Fryer Crispy Chilli Beef",
@@ -69,18 +73,22 @@ class Command(BaseCommand):
                 {"base_quantity": 2, "unit": "tbsp", "name": "vegetable oil"},
                 {"base_quantity": 2, "unit": "", "name": "spring onions, finely sliced"},
             ],
-            "pre_prep_instructions": "Slice the beef into thin strips and pat dry.",
-            "instructions": """
-            Place the beef strips in a bowl, add cornflour, and toss to coat evenly.
-            Preheat the air fryer to 200°C.
-            Lightly spray the air fryer basket with oil and add the beef strips in a single layer.
-            Cook for 8-10 minutes, shaking halfway through until crispy.
-            In a separate bowl, mix soy sauce, sweet chilli sauce, rice vinegar, ketchup, and red chilli.
-            Heat the sauce mixture in a pan until it starts to thicken.
-            Add the cooked beef to the pan and toss to coat in the sauce.
-            Garnish with spring onions before serving.
-            """,
-            "notes": "Serve immediately with steamed rice or noodles for a delicious and crispy meal.",
+            "pre_prep_instructions": [
+              "Slice the beef into thin strips and pat dry.",
+            ],
+            "instructions": [
+                "Place the beef strips in a bowl, add cornflour, and toss to coat evenly.",
+                "Preheat the air fryer to 200°C.",
+                "Lightly spray the air fryer basket with oil and add the beef strips in a single layer.",
+                "Cook for 8-10 minutes, shaking halfway through until crispy.",
+                "In a separate bowl, mix soy sauce, sweet chilli sauce, rice vinegar, ketchup, and red chilli.",
+                "Heat the sauce mixture in a pan until it starts to thicken.",
+                "Add the cooked beef to the pan and toss to coat in the sauce.",
+                "Garnish with spring onions before serving."
+            ],
+            "notes": [
+              "Serve immediately with steamed rice or noodles for a delicious and crispy meal.",
+            ]
         }
     ]
 
@@ -103,19 +111,23 @@ class Command(BaseCommand):
             )
 
             for ingredient_data in recipe_data["ingredients"]:
-                ingredient, ing_created = Ingredient.objects.get_or_create(
-                    name=ingredient_data["name"],
-                    defaults={
-                        "unit": ingredient_data["unit"],
-                        "base_quantity": ingredient_data["base_quantity"]
-                    }
-                )
-                recipe.ingredients.add(ingredient)
+                try:
+                    ingredient, ing_created = Ingredient.objects.get_or_create(
+                        name=ingredient_data["name"],
+                        defaults={
+                            "unit": ingredient_data["unit"],
+                            "base_quantity": ingredient_data["base_quantity"]
+                        }
+                    )
+                    recipe.ingredients.add(ingredient)
+                except Exception as e:
+                    self.stderr.write(
+                        self.style.ERROR(f"Error while adding ingredient '{ingredient_data['name']}': {e}")
+                    )
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"{'Created' if created else 'Existing'} recipe '{
-                        recipe.name}' has been successfully seeded!"
+                    f"{'Created' if created else 'Existing'} recipe '{recipe.name}' has been successfully seeded!"
                 )
             )
 

@@ -26,9 +26,9 @@ class Recipe(models.Model):
   base_servings = models.IntegerField()
   current_servings = models.IntegerField()
   ingredients = models.ManyToManyField(Ingredient, related_name="recipes")
-  pre_prep_instructions = models.TextField()
-  instructions = models.TextField()
-  notes = models.TextField(blank=True)
+  pre_prep_instructions = models.JSONField()
+  instructions = models.JSONField()
+  notes = models.JSONField(blank=True, default=list)
 
   def __str__(self):
     return self.name
