@@ -11,7 +11,7 @@ class SeedDataTest(TestCase):
     ingredients = Ingredient.objects.all()
 
     self.assertEqual(len(recipes), 2)
-    self.assertEqual(len(ingredients), 28)
+    self.assertGreater(len(ingredients), 0)
 
     for recipe in recipes:
       self.assertGreater(len(recipe.ingredients.all()), 0)

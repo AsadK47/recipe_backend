@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from recipes.models import Recipe, Ingredient
 
+
 class Command(BaseCommand):
   help = "Seed the database with recipes and ingredients"
 
@@ -84,26 +85,41 @@ class Command(BaseCommand):
     ]
 
     for recipe_data in recipes_data:
-        recipe = Recipe.objects.create(
-            name=recipe_data["name"],
-            category=recipe_data["category"],
-            difficulty=recipe_data["difficulty"],
-            prep_time=recipe_data["prep_time"],
-            cooking_time=recipe_data["cooking_time"],
-            base_servings=recipe_data["base_servings"],
-            current_servings=recipe_data["current_servings"],
-            pre_prep_instructions=recipe_data["pre_prep_instructions"],
-            instructions=recipe_data["instructions"],
-            notes=recipe_data["notes"]
-        )
+        try:
+            recipe, created = Recipe.objects.get_or_create(
+                name=recipe_data["name"],
+                defaults={
+                    "category": recipe_data["category"],
+                    "difficulty": recipe_data["difficulty"],
+                    "prep_time": recipe_data["prep_time"],
+                    "cooking_time": recipe_data["cooking_time"],
+                    "base_servings": recipe_data["base_servings"],
+                    "current_servings": recipe_data["current_servings"],
+                    "pre_prep_instructions": recipe_data["pre_prep_instructions"],
+                    "instructions": recipe_data["instructions"],
+                    "notes": recipe_data["notes"]
+                }
 
-        for ingredient_data in recipe_data["ingredients"]:
-            ingredient = Ingredient.objects.create(
-                name=ingredient_data["name"],
-                unit=ingredient_data["unit"],
-                base_quantity=ingredient_data["base_quantity"]
             )
-            recipe.ingredients.add(ingredient)
-        
-        self.stdout.write(self.style.SUCCESS(f"Recipe '{recipe.name}' has been successfully seeded!"))
-      
+
+            for ingredient_data in recipe_data["ingredients"]:
+                ingredient, ing_created = Ingredient.objects.get_or_create(
+                    name=ingredient_data["name"],
+                    defaults={
+                        "unit": ingredient_data["unit"],
+                        "base_quantity": ingredient_data["base_quantity"]
+                    }
+                )
+                recipe.ingredients.add(ingredient)
+
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"{'Created' if created else 'Existing'} recipe '{
+                        recipe.name}' has been successfully seeded!"
+                )
+            )
+
+        except Exception as e:
+            self.stderr.write(
+                self.style.ERROR(f"Error while seeding recipe '{recipe_data['name']}': {e}")
+            )
